@@ -1,13 +1,19 @@
 package konzolos;
 
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 
 public class Harcos extends Karakter implements Iterable<Eszkoz>{
     private int ero, ugyesseg;
     private ArrayList<Eszkoz> targyak;
 
+    public Harcos(String nev, int ero, int ugyesseg){
+        this(nev, "ember", ero, ugyesseg);
+    }
+    
     public Harcos(String nev, String faj, int ero, int ugyesseg){
         super(nev, faj);
         this.ero = ero;
@@ -15,6 +21,20 @@ public class Harcos extends Karakter implements Iterable<Eszkoz>{
         targyak = new ArrayList<>();
     }
 
+    public int getEro() {
+        return ero;
+    }
+
+    public int getUgyesseg() {
+        return ugyesseg;
+    }
+
+    public static EroComparator EroRendezo(){
+        return new EroComparator();
+    }
+    public static UgyessegComparator UgyessegRendezo(){
+        return new UgyessegComparator();
+    }
 
     
 
@@ -54,4 +74,22 @@ public class Harcos extends Karakter implements Iterable<Eszkoz>{
         
         return sb + "";
     } 
+}
+class EroComparator implements Comparator<Harcos>{
+
+
+    @Override
+    public int compare(Harcos o1, Harcos o2) {
+        Collator col = Collator.getInstance();
+        return col.compare(o1.getEro(), o2.getEro());
+    }
+}
+class UgyessegComparator implements Comparator<Harcos>{
+
+
+    @Override
+    public int compare(Harcos o1, Harcos o2) {
+        Collator col = Collator.getInstance();
+        return col.compare(o1.getUgyesseg(), o2.getUgyesseg());
+    }
 }
